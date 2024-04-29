@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: Staging
-      url: 'https://github.com/Shaswat19/databricks_staging/staging'
+      url: 'https://github.com/Shaswat19/databricks_staging/tree/staging'
     steps:
       - name: Deploy
         run: echo I am deploying! 
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: Production
-      url: 'https://github.com/Shaswat19/databricks_staging/production'
+      url: 'https://github.com/Shaswat19/databricks_staging/tree/production'
     steps:
       - name: Deploy
         run: echo I am deploying! 
