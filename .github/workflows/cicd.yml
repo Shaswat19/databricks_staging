@@ -17,7 +17,7 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.SECRET_GITHUB }}
           branch: production
           base: production
           title: 'Merge changes from staging to production'
@@ -27,7 +27,7 @@ jobs:
         if: steps.create_pr.outputs.pull-request-number
         uses: actions/github-script@v5
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.SECRET_GITHUB }}
           script: |
             const response = await github.pulls.listReviews({
               owner: context.repo.owner,
