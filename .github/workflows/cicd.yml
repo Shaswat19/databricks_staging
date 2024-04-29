@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - staging
+
 jobs:
   merge_to_production:
     runs-on: ubuntu-latest
