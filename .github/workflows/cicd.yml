@@ -27,7 +27,7 @@ jobs:
       - name: Deploy to Databricks
         uses: actions/setup-python@v2
         with:
-          python-version: 3.6.15
+          python-version: 3.9.1
       - name: Install databricks cli
         run: |
           python -m pip install --upgrade databricks-cli
