@@ -40,4 +40,4 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          databricks repos update --branch production --path /Repos/shaswat@onebyzero/databricks_production
+          databricks repos update --branch production --path /Workspace/Repos/shaswat@onebyzero/databricks_production
