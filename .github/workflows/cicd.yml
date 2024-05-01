@@ -27,7 +27,7 @@ jobs:
       name: Production 
     steps:
         - name: Deploy to Databricks
-          uses: actions/setup-python@v2
+        - uses: actions/setup-python@v2
           with:
             python-version: 3.6
         -name: Install databricks cli
