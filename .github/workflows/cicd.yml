@@ -41,3 +41,8 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           databricks repos update --branch production --path /Repos/shaswat@onebyzero/databricks_production
+      - name: Updating branch
+        run: |
+          git checkout production  # Switch to production branch
+          git pull origin staging  # Pull latest changes from staging branch
+          git push origin production  # Push changes to production branch
