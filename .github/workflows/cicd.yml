@@ -1,47 +1,53 @@
-name: Merge to Production
+name: cicd
 
 on:
   push:
-    branches:
-      - staging
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  merge_to_production:
+  Build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Create Pull Request
-        id: create_pr
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.SECRET_GITHUB }}
-          branch: production
-          base: production
-          title: 'Merge changes from staging to production'
-          body: 'Please review and approve the changes.'
-
-      - name: Wait for Approval
-        if: steps.create_pr.outputs.pull-request-number
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.SECRET_GITHUB }}
-          script: |
-            const response = await github.pulls.listReviews({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: ${ { steps.create_pr.outputs.pull-request-number } }
-            });
-            const approvals = response.data.filter(review => review.state === 'APPROVED');
-            if (approvals.length >= 1) {
-              console.log('PR approved. Merging changes to production.');
-              await github.pulls.merge({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: ${ { steps.create_pr.outputs.pull-request-number } }
-              });
-            } else {
-              console.log('PR is not yet approved.');
-            }
+      - name: Compile
+        run: echo Hello, world!
+    
+  DeployDev:
+    name: Deploy to Dev 
+    if: github.event_name == 'pull_request'
+    needs: [Build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Development
+      url: 'http://dev.myapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am deploying! 
+    
+  DeployStaging:
+    name: Deploy to Staging 
+    if: github.event.ref == 'refs/heads/main'
+    needs: [Build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Staging
+      url: 'https://github.com/Shaswat19/databricks_staging/staging'
+    steps:
+      - name: Deploy
+        run: echo I am deploying! 
+            
+  DeployProd:
+    name: Deploy to Production 
+    needs: [DeployStaging]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Production
+      url: 'https://github.com/Shaswat19/databricks_staging/production'
+    steps:
+      - name: Deploy
+        run: echo I am deploying! 
+    
