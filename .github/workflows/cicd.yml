@@ -26,6 +26,18 @@ jobs:
     environment: 
       name: Production 
     steps:
-      - name: Deploy
-        run: echo I am deploying! 
+        - name: Deploy to Databricks
+          uses: actions/setup-python@v2
+          with:
+            python-version: 3.6
+        -name: Install databricks cli
+         run: |
+           python -m pip install --upgrade databricks-cli
+        -name: Remote update Prod Repo
+         env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+         run: |
+           databricks repos update --branch production --path /Repos/shaswat@onebyzero/databricks_production/
+          
     
