@@ -1,2 +1,2 @@
-pritn
+print
 
