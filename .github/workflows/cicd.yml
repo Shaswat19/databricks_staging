@@ -44,11 +44,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Switch to prod branch
-        run: git checkout production
+      - name: Switch to production branch
+        run: |
+          git fetch --all
+          git checkout -B production origin/production
 
-      - name: Pull latest changes from stage branch
-        run: git pull origin staging
+      - name: Merge changes from staging
+        run: |
+          git merge origin/staging --no-edit
 
-      - name: Push changes to prod branch
+      - name: Push changes to production branch
         run: git push origin production
