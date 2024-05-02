@@ -43,7 +43,7 @@ jobs:
           databricks repos update --branch production --path /Repos/shaswat@onebyzero/databricks_production
       - name: Updating branch
         run: |
-          cd /home/Shaswat19/databricks_staging
+          cd /Shaswat19/databricks_staging
           git checkout production  # Switch to production branch
           git pull origin staging  # Pull latest changes from staging branch
           git push origin production  # Push changes to production branch
