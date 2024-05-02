@@ -49,6 +49,11 @@ jobs:
           git fetch --all
           git checkout -B production origin/production
 
+      - name: Set Git user email and name
+        run: |
+          git config --global user.email "shaswatp19@gmail.com"
+          git config --global user.name "Shaswat19"
+
       - name: Merge changes from staging
         run: |
           git merge origin/staging --no-edit --allow-unrelated-histories
