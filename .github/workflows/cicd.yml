@@ -60,3 +60,5 @@ jobs:
 
       - name: Push changes to production branch
         run: git push origin production
+        env:
+            GH_PAT: ${{ secrets.GH_PAT }}
